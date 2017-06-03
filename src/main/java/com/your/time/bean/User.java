@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="users")
 public class User {
     @Id
+    protected String _id;
     protected String username;
     protected String password;
     protected String firstname;
@@ -17,6 +18,7 @@ public class User {
     protected String state;
     protected String zip;
     protected String phonenumber;
+    protected String role;
     
     public User() {}
 
@@ -34,7 +36,7 @@ public class User {
 	 * @param phonenumber
 	 */
 	public User(String username, String password, String firstname, String lastname, String email, String addressline1,
-			String addressline2, String country, String state, String zip, String phonenumber) {
+			String addressline2, String country, String state, String zip, String phonenumber,String role) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -47,6 +49,21 @@ public class User {
 		this.state = state;
 		this.zip = zip;
 		this.phonenumber = phonenumber;
+		this.role = role;
+	}
+
+	/**
+	 * @return the _id
+	 */
+	public String get_id() {
+		return _id;
+	}
+
+	/**
+	 * @param _id the _id to set
+	 */
+	public void set_id(String _id) {
+		this._id = _id;
 	}
 
 	/**
@@ -201,5 +218,19 @@ public class User {
 	 */
 	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
+	}
+
+	/**
+	 * @return the role
+	 */
+	public String getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(String role) {
+		this.role = role;
 	}
 }
