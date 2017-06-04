@@ -53,30 +53,16 @@ public class UsersController {
 		return status;
 	}
 	
-	@RequestMapping(value = "/users/registerCompany")
+	@RequestMapping(value = "/users/register/{user}")
 	public Status registerCompany(@PathVariable User user) {
 		Status status = new Status();
 		user = userRepository.save(user);
 		if(user != null){
 			status.setStatus(true);
-			status.setMessage("Company registration is successful");
+			status.setMessage("Registration is successful");
 		}else{
 			status.setStatus(false);
-			status.setMessage("Company registration is not successful");
-		}
-		return status;
-	}
-	
-	@RequestMapping(value = "/users/registerUser")
-	public Status registerUser(@PathVariable User user) {
-		Status status = new Status();
-		user = userRepository.save(user);
-		if(user != null){
-			status.setStatus(true);
-			status.setMessage("User registration is successful");
-		}else{
-			status.setStatus(false);
-			status.setMessage("User registration is not successful");
+			status.setMessage("Registration is not successful");
 		}
 		return status;
 	}
