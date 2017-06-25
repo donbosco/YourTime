@@ -1,10 +1,14 @@
 package com.your.time.bean;
 
-public class Status {
+import java.util.List;
+
+public class Status<T> {
 	private boolean status;
 	private String errorCode;
 	private String errorDesc;
 	private String message;
+	private List<T> results;
+	private T result;
 	/**
 	 * @return the status
 	 */
@@ -53,4 +57,16 @@ public class Status {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	public List<T> getResults() {
+		return results;
+	}
+	public void setResults(List<T> results) {
+		this.results = results;
+	}
+	public T getResult() {
+		return result;
+	}
+	public void setResult(T result) {
+		this.result = result;
+	}	
 }

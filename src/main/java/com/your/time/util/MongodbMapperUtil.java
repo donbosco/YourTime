@@ -20,6 +20,8 @@ public class MongodbMapperUtil {
 		public static String STATE = "state";
 		public static String ZIP = "zip";
 		public static String PHONENUMBER = "phonenumber";
+		public static String TYPE = "type";
+		public static String ISACTIVE = "isactive";
 	}
 	public static class Collections{
 		public static String BOOKING = "booking";
