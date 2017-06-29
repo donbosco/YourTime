@@ -1,10 +1,16 @@
 package com.your.time.bean;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="users")
-public class MasterData {
+@Document(collection="masterdata")
+public class MasterData  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
     protected String _id;
 	protected String type;

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,7 +18,9 @@ import com.your.time.bean.User;
 import com.your.time.dao.CommonDAO;
 import com.your.time.dao.MasterDataDAO;
 import com.your.time.dao.UsersRepositoryDAO;
+import com.your.time.service.MasterDataService;
 import com.your.time.util.MongodbMapperUtil;
+import com.your.time.util.YourTimeRestURIConstants;
 
 
 @RestController
@@ -25,12 +29,9 @@ public class MasterDataController {
 	private final AtomicLong counter = new AtomicLong();
 	
 	@Autowired
-	private MasterDataDAO masterDataDAO;
+	MasterDataService masterDataService;
 	
-	@Autowired
-	private CommonDAO commonDAO;
-	
-	@RequestMapping("/services")
+	@RequestMapping(value=YourTimeRestURIConstants.StaticWS.WS_HOME, method = RequestMethod.POST)
 	public ModelAndView findAll() {
 		//List<User> users = (List<User>) masterDataDAO.findAll();
 		ModelAndView modelAndView = new ModelAndView("index");
@@ -38,13 +39,10 @@ public class MasterDataController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/static/fetchActiveType")
-	public Status<MasterData> getByActiveType(@PathVariable String type) {
+	@RequestMapping(value=YourTimeRestURIConstants.StaticWS.WS_FETCH_ACTIVE_TYPE, method = RequestMethod.POST)
+	public Status<MasterData> getByActiveType(@RequestBody MasterData masterData) {
 		Status<MasterData> status = new Status<MasterData>();
-		
-		Query query = new Query();
-		query.addCriteria(Criteria.where(MongodbMapperUtil.Attributes.ISACTIVE).is("1").andOperator(Criteria.where(MongodbMapperUtil.Attributes.TYPE).is(type)));
-		List<MasterData> list  = commonDAO.findByQuery(query, MasterData.class);
+		List<MasterData> list  = masterDataService.findByActiveType(masterData.getType());
 		if(list == null || list.isEmpty()){
 			status.setStatus(false);
 			status.setMessage("No service types configured.");

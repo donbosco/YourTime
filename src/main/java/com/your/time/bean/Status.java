@@ -1,8 +1,13 @@
 package com.your.time.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Status<T> {
+public class Status<T>  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean status;
 	private String errorCode;
 	private String errorDesc;

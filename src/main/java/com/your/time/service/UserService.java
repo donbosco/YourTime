@@ -67,5 +67,15 @@ private org.springframework.security.core.userdetails.User userdetails;
         return user;
     }
 
-   
+    public User save(User user) {
+    	if(user != null){
+    		usersRepositoryDAO.save(user);
+    		//ServicePro
+    	}
+		return null;
+	}
+
+	public List<User> findAll() {
+		return (List<User>) usersRepositoryDAO.findAll();
+	}
 }

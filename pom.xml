@@ -16,6 +16,7 @@
 		<spring.security.core.version>4.2.1.RELEASE</spring.security.core.version>
 		<jackson.version>2.6.1</jackson.version>
 		<log4j.version>1.2.17</log4j.version>
+		<org.aspectj-version>1.7.4</org.aspectj-version>
 	</properties>
 
 	<dependencies>
@@ -105,6 +106,13 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${org.springframework.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Various Application Context utilities, including EhCache, JavaMail, 
@@ -216,6 +224,20 @@
 			<version>${spring.security.core.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
+		</dependency>
+		
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+		
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
