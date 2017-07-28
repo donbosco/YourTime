@@ -3,9 +3,12 @@ package com.your.time.bean;
 import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="users")
+import com.your.time.util.MongodbMapperUtil;
+
+@Document(collection=MongodbMapperUtil.Collections.USER)
 public class User  implements Serializable{
     /**
 	 * 
@@ -25,14 +28,20 @@ public class User  implements Serializable{
     protected String state;
     protected String zip;
     protected String phonenumber;
-    protected boolean isServiceProvider;
-    protected String role;
+    private boolean isServiceProvider;
+    private String role;
+    private String serviceProviderId;
+    
+    @Transient
+    protected String serviceProviderTye;
+    @Transient
+    protected ServiceProvider serviceProviderDetail;
     
     public User() {}
     
 	public User(String _id, String username, String password, String confirmPassword, String firstname, String lastname,
 			String email, String addressline1, String addressline2, String country, String state, String zip,
-			String phonenumber, boolean isServiceProvider, String role) {
+			String phonenumber, boolean isServiceProvider, String role,String serviceProviderId) {
 		super();
 		this._id = _id;
 		this.username = username;
@@ -49,9 +58,31 @@ public class User  implements Serializable{
 		this.phonenumber = phonenumber;
 		this.isServiceProvider = isServiceProvider;
 		this.role = role;
+		this.serviceProviderId = serviceProviderId;
 	}
-
-
+	
+	public User(String _id, String username, String password, String confirmPassword, String firstname, String lastname,
+			String email, String addressline1, String addressline2, String country, String state, String zip,
+			String phonenumber, boolean isServiceProvider, String role,ServiceProvider serviceProviderDetail,String serviceProviderId) {
+		super();
+		this._id = _id;
+		this.username = username;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.addressline1 = addressline1;
+		this.addressline2 = addressline2;
+		this.country = country;
+		this.state = state;
+		this.zip = zip;
+		this.phonenumber = phonenumber;
+		this.isServiceProvider = isServiceProvider;
+		this.role = role;
+		this.serviceProviderDetail = serviceProviderDetail;
+		this.serviceProviderId = serviceProviderId;
+	}
 
 	public String get_id() {
 		return _id;
@@ -171,5 +202,27 @@ public class User  implements Serializable{
 
 	public void setRole(String role) {
 		this.role = role;
-	}    
+	}
+
+	public String getServiceProviderTye() {
+		return serviceProviderTye;
+	}
+
+	public void setServiceProviderTye(String serviceProviderTye) {
+		this.serviceProviderTye = serviceProviderTye;
+	}
+
+	public ServiceProvider getServiceProviderDetail() {
+		return serviceProviderDetail;
+	}
+
+	public void setServiceProviderDetail(ServiceProvider serviceProviderDetail) {
+		this.serviceProviderDetail = serviceProviderDetail;
+	}
+	public void setServiceProviderId(String serviceProviderId) {
+		this.serviceProviderId = serviceProviderId;
+	}
+	public String getServiceProviderId() {
+		return serviceProviderId;
+	}
 }

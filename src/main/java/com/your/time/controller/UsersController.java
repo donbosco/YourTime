@@ -5,11 +5,11 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.your.time.bean.Status;
@@ -20,9 +20,9 @@ import com.your.time.util.MongodbMapperUtil;
 import com.your.time.util.YourTimeRestURIConstants;
 
 
-//@RestController
+@RestController
 //@RequestMapping("/users")
-@Controller
+//@Controller
 public class UsersController {
 	
 	private final AtomicLong counter = new AtomicLong();
@@ -46,7 +46,7 @@ public class UsersController {
 		Status<User> status = new Status<User>();
 		
 		Query query = new Query();
-		query.addCriteria(Criteria.where(MongodbMapperUtil.Attributes.USERNAME).is(name).andOperator(Criteria.where(MongodbMapperUtil.Attributes.PASSWORD).is(password)));
+		query.addCriteria(Criteria.where(MongodbMapperUtil.User.username).is(name).andOperator(Criteria.where(MongodbMapperUtil.User.password).is(password)));
 		User user = commonDAO.findOneByQuery(query, User.class);
 		if(user == null){
 			status.setStatus(false);
@@ -61,14 +61,34 @@ public class UsersController {
 	@RequestMapping(value = YourTimeRestURIConstants.UsersWS.WS_SIGN_UP, method = RequestMethod.POST)
 	public @ResponseBody Status<User> registerCompany(@RequestBody User user) {
 		Status<User> status = new Status<User>();
+		user.setServiceProvider(user.getServiceProviderTye() == null || user.getServiceProviderTye().isEmpty());
 		user = userService.save(user);
 		if(user != null){
 			status.setStatus(true);
 			status.setMessage("Registration is successful");
+			status.setResult(user);
 		}else{
 			status.setStatus(false);
 			status.setMessage("Registration is not successful");
+			status.setResult(user);
 		}
-		return null;
+		return status;
+	}
+	
+	@RequestMapping(value = YourTimeRestURIConstants.UsersWS.WS_SIGN_UP, method = RequestMethod.POST)
+	public @ResponseBody Status<User> updateProfile(@RequestBody User user) {
+		Status<User> status = new Status<User>();
+		user.setServiceProvider(user.getServiceProviderTye() == null || user.getServiceProviderTye().isEmpty());
+		user = userService.save(user);
+		if(user != null){
+			status.setStatus(true);
+			status.setMessage("Your profile is updated");
+			status.setResult(user);
+		}else{
+			status.setStatus(false);
+			status.setMessage("Your profile could not be updated.");
+			status.setResult(user);
+		}
+		return status;
 	}
 }

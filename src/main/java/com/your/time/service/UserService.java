@@ -13,7 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.your.time.bean.ServiceProvider;
 import com.your.time.bean.User;
+import com.your.time.dao.ServiceProviderDAO;
 import com.your.time.dao.UsersRepositoryDAO;
 
 @Component
@@ -21,6 +23,9 @@ public class UserService implements UserDetailsService {
 
     @Resource
     private UsersRepositoryDAO usersRepositoryDAO;
+    
+    @Resource
+    private ServiceProviderDAO serviceProviderDAO;
     
     private static final Logger logger = Logger.getLogger(UserService.class);
     
@@ -70,9 +75,24 @@ private org.springframework.security.core.userdetails.User userdetails;
     public User save(User user) {
     	if(user != null){
     		usersRepositoryDAO.save(user);
-    		//ServicePro
+    		if(user.isServiceProvider()){
+	    		ServiceProvider serviceProvider = new ServiceProvider();
+	    		serviceProvider.setServiceProviderTye(user.getServiceProviderTye());
+	    		serviceProvider.setAddressline1(user.getAddressline1());
+	    		serviceProvider.setAddressline2(user.getAddressline2());
+	    		serviceProvider.setCountry(user.getCountry());
+	    		serviceProvider.setDisplayName(user.getUsername());
+	    		serviceProvider.setEmail(user.getEmail());
+	    		serviceProvider.setOfficialName(user.getFirstname() +" "+user.getLastname());
+	    		serviceProvider.setPhonenumber(user.getPhonenumber());
+	    		serviceProvider.setState(user.getState());
+	    		serviceProvider.setZip(user.getZip());
+	    		serviceProvider.setIspId(user.getCountry().substring(0, 2)+""+user.getState().substring(0, 2)+""+user.getFirstname().substring(0, 2)+""+user.getLastname().substring(0, 2)+"001");
+	    		serviceProviderDAO.save(serviceProvider);
+	    		user.setServiceProviderDetail(serviceProvider);
+    		}
     	}
-		return null;
+		return user;
 	}
 
 	public List<User> findAll() {

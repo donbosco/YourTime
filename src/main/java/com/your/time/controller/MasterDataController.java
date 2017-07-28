@@ -39,7 +39,7 @@ public class MasterDataController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value=YourTimeRestURIConstants.StaticWS.WS_FETCH_ACTIVE_TYPE, method = RequestMethod.POST)
+	@RequestMapping(value=YourTimeRestURIConstants.StaticWS.WS_FETCH_ANY_ACTIVE_TYPE, method = RequestMethod.POST)
 	public Status<MasterData> getByActiveType(@RequestBody MasterData masterData) {
 		Status<MasterData> status = new Status<MasterData>();
 		List<MasterData> list  = masterDataService.findByActiveType(masterData.getType());
