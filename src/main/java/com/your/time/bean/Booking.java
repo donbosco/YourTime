@@ -3,6 +3,7 @@ package com.your.time.bean;
 import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.your.time.util.MongodbMapperUtil;
@@ -13,13 +14,17 @@ public class Booking implements Serializable{
 	@Id
 	protected String _id;
 	protected String username;
+	@Transient
     protected User userDetail;
 	protected String serviceProviderId;
+	@Transient
 	protected String service;
     protected String phonenumber;
 	protected String date;
 	protected String time;
+	protected String reason;
 	protected String status;
+	@Transient
 	protected String waitTime;
 
     public Booking() {}
@@ -43,7 +48,8 @@ public class Booking implements Serializable{
 		this.date = date;
 		this.time = time;
 		this.status = status;
-		this.waitTime = YourTimeUtil.calculateWaitTime(date+" "+time);
+		if(date != null && time != null)
+			this.waitTime = YourTimeUtil.calculateWaitTime(date+" "+time);
 	}
 
 	public String get_id() {
@@ -84,7 +90,16 @@ public class Booking implements Serializable{
 
 	public void setTime(String time) {
 		this.time = time;
-		waitTime = YourTimeUtil.calculateWaitTime(date+" "+time);
+		if(date != null && time != null)
+			waitTime = YourTimeUtil.calculateWaitTime(date+" "+time);
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 
 	public String getStatus() {
@@ -96,7 +111,8 @@ public class Booking implements Serializable{
 	}
 
 	public String getWaitTime() {
-		waitTime = YourTimeUtil.calculateWaitTime(date+" "+time);
+		if(date != null && time != null)
+			waitTime = YourTimeUtil.calculateWaitTime(date+" "+time);
 		return waitTime;
 	}
 

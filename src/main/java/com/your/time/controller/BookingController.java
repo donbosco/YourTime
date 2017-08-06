@@ -16,8 +16,6 @@ import com.your.time.util.YourTimeRestURIConstants;
 
 
 @RestController
-//@RequestMapping("/users")
-//@Controller
 public class BookingController {
 
 	private final AtomicLong counter = new AtomicLong();
