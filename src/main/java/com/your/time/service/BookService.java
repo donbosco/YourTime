@@ -39,6 +39,9 @@ public class BookService {
 		Query query = new Query();
 		query.addCriteria(Criteria.where(MongodbMapperUtil.Booking.username).is(booking.getUsername()));
 		List<Booking> list  = commonDAO.findByQuery(query, Booking.class);
+		for (Booking obj : list) {
+			obj.getWaitTime();
+		}
 		return list;
 	}
 	
@@ -51,6 +54,9 @@ public class BookService {
 		statuses.add(BookingStatus.RESCHEDULED);
 		query.addCriteria(Criteria.where(MongodbMapperUtil.Booking.username).is(booking.getUsername()).andOperator(Criteria.where(MongodbMapperUtil.Booking.status).in(statuses)));
 		List<Booking> list  = commonDAO.findByQuery(query, Booking.class);
+		for (Booking obj : list) {
+			obj.getWaitTime();
+		}
 		return list;
 	}
 
