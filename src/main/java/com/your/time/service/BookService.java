@@ -115,6 +115,11 @@ public class BookService {
 		booking.setStatus(BookingStatus.CANCEL.name());
 		return bookRepositoryDAO.save(booking);
 	}
+	
+	public Booking confirmScheduleByISP(Booking booking) {
+		booking.setStatus(BookingStatus.CONFIRMED.name());
+		return bookRepositoryDAO.save(booking);
+	}
 
 	public Booking rescheduleScheduleByISP(Booking booking) {
 		booking.setStatus(BookingStatus.RESCHEDULED.name());

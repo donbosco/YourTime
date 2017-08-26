@@ -28,6 +28,7 @@ public class YourTimeRestURIConstants {
 		public static final String WS_ALL_SCHEDULES_DONE_BY_ISP = "/book/isp/schedule/list/isp";
 		public static final String WS_ALL_ACTIVE_SCHEDULES_DONE_BY_ISP = "/book/isp/schedule/list/active/isp";
 		public static final String WS_SCHEDULE_CANCEL_BY_ISP = "/book/isp/schedule/cancel";
+		public static final String WS_SCHEDULE_CONFIRM_BY_ISP = "/book/isp/schedule/confirm";
 		public static final String WS_SCHEDULE_RESCHEDULE_BY_ISP = "/book/isp/schedule/reschedule";
 	}
 }

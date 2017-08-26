@@ -240,6 +240,23 @@ public class BookingController {
 		}
 		return status;
 	}
+	
+	@RequestMapping(value=YourTimeRestURIConstants.BookingWS.WS_SCHEDULE_CONFIRM_BY_ISP, method = RequestMethod.POST)
+	public Status<Booking> confirmScheduleByISP(@RequestBody Booking booking) {
+		Booking schedule = bookService.confirmScheduleByISP(booking);
+		Status<Booking> status = new Status<Booking>();
+
+		if(schedule != null){
+			status.setStatus(true);
+			status.setMessage("Your schedule is confirmed.");
+			status.setResult(schedule);
+		}else{
+			status.setStatus(false);
+			status.setMessage("Your schedule could not be confirmed.");
+			status.setResult(booking);
+		}
+		return status;
+	}
 
 	@RequestMapping(value=YourTimeRestURIConstants.BookingWS.WS_SCHEDULE_RESCHEDULE_BY_ISP, method = RequestMethod.POST)
 	public Status<Booking> rescheduleScheduleByISP(@RequestBody Booking booking) {
