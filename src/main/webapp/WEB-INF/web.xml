@@ -1,21 +1,59 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
 
-<web-app>
-	<display-name>Archetype Created Web Application</display-name>
-	<servlet>
-		<servlet-name>yourtime</servlet-name>
-		<servlet-class>
-			org.springframework.web.servlet.DispatcherServlet
-		</servlet-class>
-		
-		<!-- classpath:yourtime-spring-servlet.xml -->
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    id="WebApp_ID" version="2.5">
+    
+    <display-name>YourTime</display-name>
+  	<welcome-file-list>
+  		<welcome-file>/WEB-INF/index.jsp</welcome-file>
+  	</welcome-file-list>
+  	
+  	<!-- Spring Security Filter needed to security configuration to check and apply security to all application urls-->
+  	<!-- <filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter> -->
 
-	<servlet-mapping>
-		<servlet-name>yourtime</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
+	<!-- <filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+    
+    <!-- Configuration files of the Spring modules -->
+    <context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>
+	    	/WEB-INF/mvc-config.xml
+	    	<!-- /WEB-INF/security-config.xml  -->
+	    	/WEB-INF/mongo-config.xml
+	    </param-value>
+	</context-param>
+        <listener>
+              <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- Log4j configuration -->
+	<context-param>
+	    <param-name>log4jConfigLocation</param-name>
+	    <param-value>/WEB-INF/classes/log4j.properties</param-value>
+	</context-param>    
+	<listener>
+	    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+  	
+  	<!-- Spring MVC base configuration to manage all the application urls-->
+    <servlet>
+        <servlet-name>yourtime</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>yourtime</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 </web-app>
