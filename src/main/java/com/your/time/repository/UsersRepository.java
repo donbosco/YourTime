@@ -32,7 +32,8 @@ public class UsersRepository implements Repository<User>{
 
 	@Override
 	public User getObject(String id) {
-		return mongoTemplate.findOne(new Query(Criteria.where(MongodbMapperUtil.Attributes.USERNAME).is(id)),User.class);
+		Query query = new Query(Criteria.where(MongodbMapperUtil.Attributes.USERNAME).is(id));
+		return mongoTemplate.findOne(query,User.class);
 	}
 
 	@Override
